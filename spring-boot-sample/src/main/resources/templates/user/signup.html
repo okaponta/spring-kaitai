@@ -13,31 +13,31 @@
     <title th:text="#{user.signup.title}"></title>
 </head>
 <body class="bg-light">
-<form id="signup-form" method="post" action="/user/signup" class="form-signup">
+<form id="signup-form" method="post" action="/user/signup" class="form-signup" th:object="${signupForm}">
     <h1 class="text-center" th:text="#{user.signup.title}"></h1>
     <div class="form-group">
         <label for="userId" th:text="#{userId}"></label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" th:field="*{userId}">
     </div>
     <div class="form-group">
         <label for="password" th:text="#{password}"></label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" th:field="*{password}">
     </div>
     <div class="form-group">
         <label for="userName" th:text="#{userName}"></label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" th:field="*{userName}">
     </div>
     <div class="form-group">
         <label for="birthday" th:text="#{birthday}"></label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" placeholder="yyyy/MM/dd" th:field="*{birthday}">
     </div>
     <div class="form-group">
         <label for="age" th:text="#{age}"></label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" th:field="*{age}">
     </div>
     <div class="form-group">
         <div th:each="item:${genderMap}" class="form-check-inline">
-            <input type="radio" class="form-check-input" th:value="${item.value}"/>
+            <input type="radio" class="form-check-input" th:value="${item.value}" th:field="*{gender}"/>
             <label class="form-check-label" th:text="${item.key}"></label>
         </div>
     </div>
