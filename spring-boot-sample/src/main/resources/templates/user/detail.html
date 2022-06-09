@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>ユーザー詳細</title>
+    <link rel="stylesheet" th:href="@{/css/user/list.css}">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="header border-bottom">
+        <h1 class="h2">ユーザー詳細</h1>
+    </div>
+    <form id="user-detail-form" method="post" th:action="@{/user/detail}" class="form-signup"
+          th:object="${userDetailForm}">
+        <!-- ユーザー詳細情報 -->
+        <table class="table table-striped table-bordered table-hover">
+            <tbody>
+            <tr>
+                <th class="w-25">ユーザーID</th>
+                <td th:text="*{userId}"></td>
+            </tr>
+            <tr>
+                <th>パスワード</th>
+                <td>
+                    <input type="text" class="form-control" th:field="*{password}"/>
+                </td>
+            </tr>
+            <tr>
+                <th>ユーザー名</th>
+                <td>
+                    <input type="text" class="form-control" th:field="*{userName}"/>
+                </td>
+            </tr>
+            <tr>
+                <th>誕生日</th>
+                <td th:text="*{#dates.format(birthday, 'YYYY/MM/dd')}"></td>
+            </tr>
+            <tr>
+                <th>年齢</th>
+                <td th:text="*{age}"></td>
+            </tr>
+            <tr>
+                <th>性別</th>
+                <td th:text="*{gender == 1 ? '男性' : '女性'}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+</body>
+</html>
