@@ -5,4 +5,7 @@
         insert into m_user(user_id,password,user_name,birthday,age,gender,department_id,role)
         values(#{userId},#{password},#{userName},#{birthday},#{age},#{gender},#{departmentId},#{role})
     </insert>
+    <select id="findMany" resultType="MUser">
+        select * from m_user
+    </select>
 </mapper>
