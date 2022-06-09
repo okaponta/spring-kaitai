@@ -1,5 +1,6 @@
 package com.example.form;
 
+import com.example.domain.user.model.Department;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,4 +13,5 @@ public final class UserDetailForm {
     private Date birthday;
     private Integer age;
     private Integer gender;
+    private Department department;
 }

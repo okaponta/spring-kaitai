@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS m_user (
 );
 
 CREATE TABLE IF NOT EXISTS m_department (
-  department_id VARCHAR(50) PRIMARY KEY,
+  department_id INT PRIMARY KEY,
   department_name VARCHAR(50)
 );
 
