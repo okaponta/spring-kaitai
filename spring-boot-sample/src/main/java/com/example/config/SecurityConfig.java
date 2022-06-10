@@ -5,12 +5,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 @EnableWebSecurity
 @Configuration
@@ -49,10 +50,22 @@ public class SecurityConfig {
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        PasswordEncoder encoder = passwordEncoder();
-        UserDetails user = User.withUsername("user").password(encoder.encode("user")).roles("GENERAL").build();
-        UserDetails admin = User.withUsername("admin").password(encoder.encode("admin")).roles("ADMIN").build();
-        return new InMemoryUserDetailsManager(user, admin);
+    public UserDetailsManager users(DataSource dataSource) {
+        String userQuery =
+                "select user_id as username,password,true as enabled from m_user where user_id = ?";
+        String authoritiesQuery =
+                "select user_id,role from m_user where user_id = ?";
+        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+        users.setUsersByUsernameQuery(userQuery);
+        users.setAuthoritiesByUsernameQuery(authoritiesQuery);
+        return users;
     }
+
+//    @Bean
+//    public InMemoryUserDetailsManager userDetailsService() {
+//        PasswordEncoder encoder = passwordEncoder();
+//        UserDetails user = User.withUsername("user").password(encoder.encode("user")).roles("GENERAL").build();
+//        UserDetails admin = User.withUsername("admin").password(encoder.encode("admin")).roles("ADMIN").build();
+//        return new InMemoryUserDetailsManager();
+//    }
 }

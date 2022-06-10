@@ -67,4 +67,7 @@
     <delete id="deleteOne">
         delete from m_user where user_id = #{userId}
     </delete>
+    <select id="findLoginUser" resultType="MUser">
+        select * from m_user where user_id = #{userId}
+    </select>
 </mapper>
