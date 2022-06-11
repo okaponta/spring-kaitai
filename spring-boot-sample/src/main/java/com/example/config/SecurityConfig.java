@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .mvcMatchers("/user/signup").permitAll() // 直リンクOK
                 .anyRequest().authenticated()
         );
-        http.csrf().disable();
+        //http.csrf().disable();
         return http.build();
     }
 
