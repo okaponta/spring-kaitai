@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -40,6 +41,10 @@ public class SecurityConfig {
                 .usernameParameter("userId")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/user/list", true)
+        ).logout(logout -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
         ).authorizeHttpRequests(authz -> authz
                 .mvcMatchers("/login").permitAll() // 直リンクOK
                 .mvcMatchers("/user/signup").permitAll() // 直リンクOK
@@ -52,7 +57,7 @@ public class SecurityConfig {
     @Bean
     public UserDetailsManager users(DataSource dataSource) {
         String userQuery =
-                "select user_id as username,password,true as enabled from m_user where user_id = ?";
+                "select user_id,password,true from m_user where user_id = ?";
         String authoritiesQuery =
                 "select user_id,role from m_user where user_id = ?";
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);

@@ -48,6 +48,8 @@ public class SignupController {
         }
         log.info(form.toString());
         MUser user = modelMapper.map(form, MUser.class);
+        // なぜかマッピングされず、デバッグする気力にならなかったので手動で追加
+        user.setBirthday(form.birthday());
         userService.signup(user);
         return "redirect:/login";
     }
