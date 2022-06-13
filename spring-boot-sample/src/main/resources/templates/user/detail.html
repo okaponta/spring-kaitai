@@ -85,7 +85,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="item: *{salaryList}">
-                    <td th:text="${item.yearMonth}"></td>
+                    <td th:text="${item.salaryKey.yearMonth}"></td>
                     <td th:text="${#numbers.formatInteger(item.salary, 3, 'COMMA')}"></td>
                 </tr>
                 </tbody>
